@@ -62,35 +62,50 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .error {
+                display: none;
+            }
         </style>
+
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous">
+        </script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Upload Hierarchy
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="error"></div>
+                <div>
+                    <form id="upload" enctype="multipart/form-data">
+                        Select image to upload:
+                        <input type="file" name="hierarchy" id="hierarchy">
+                        <input type="submit" value="Upload File" name="submit">
+                    </form>
                 </div>
             </div>
         </div>
+        <script>
+            // Using jQuery we are able to submit a form with a file input.
+            // We can then send a request to the endpoint created in the API
+            // Use response to print Org Chart
+            $(document).ready(function(){
+                $('#upload').submit(function(e){
+                    e.preventDefault();
+                    var error = $('.error');
+                    error.hide();
+                    var fileInput = $('[name="hierarchy"]').val();
+                    if (fileInput == "") {
+                        error.html('<p>No input file.</p>').show();
+                        return;
+                    }
+                    // @TODO Read input file, make ajax to api endpoint, then display response in Org Chart.
+                });
+            });
+        </script>
     </body>
 </html>

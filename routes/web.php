@@ -10,3 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/upload-hierarchy', function () {
+    return view('upload');
+});
