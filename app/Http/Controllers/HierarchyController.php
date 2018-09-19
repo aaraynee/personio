@@ -15,13 +15,20 @@ class HierarchyController extends Controller
     {
         $relationships = $request->all();
         $boss = $this->getBoss($relationships);
-        $structure = [];
-        foreach($relationships as $child => $parent) {
-            if(!array_key_exists($parent, $structure)) { $structure[$parent] = []; }
-            $structure[$parent][] = $child;
-        }
+        // If no boss then loop must exist.
+        if($boss) {
+            $structure = [];
+            foreach ($relationships as $child => $parent) {
+                if (!array_key_exists($parent, $structure)) {
+                    $structure[$parent] = [];
+                }
+                $structure[$parent][] = $child;
+            }
 
-        return $this->generateHierarchy($relationships, $boss);
+            return $this->generateHierarchy($relationships, $boss);
+        } else {
+            return 'Loop exists';
+        }
     }
 
     /**
