@@ -13,7 +13,7 @@ class HierarchyTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testHierarchy()
     {
         // Set input data
         $data = ["Pete"=> "Nick"];
@@ -25,9 +25,25 @@ class HierarchyTest extends TestCase
         $response->assertStatus(200);
 
         // Check to see if JSON Structure matches
-        $response->assertStatus(200)
-            ->assertJsonStructure([
+        $response->assertJsonStructure([
                 '*' => [[ '*' => []]]
+            ]);
+    }
+
+    public function testLoop()
+    {
+        // Set input data
+        $data = ["Pete"=> "Nick", "Nick" => "Pete"];
+
+        // Make post request to hierarchy endpoint
+        $response = $this->post('/api/hierarchy', $data);
+
+        // Check for response status
+        $response->assertStatus(200);
+
+        // Check to see if JSON Structure matches
+        $response->assertExactJson([
+                'Loop exists'
             ]);
     }
 }

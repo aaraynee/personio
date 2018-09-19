@@ -27,7 +27,7 @@ class HierarchyController extends Controller
 
             return $this->generateHierarchy($relationships, $boss);
         } else {
-            return 'Loop exists';
+            return ['Loop exists'];
         }
     }
 
