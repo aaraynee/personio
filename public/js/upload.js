@@ -1,4 +1,5 @@
 var Upload = {
+    // Setup elements we will reuse
     el: {
         new: $('.upload-new'),
         content: $('.content'),
@@ -6,10 +7,13 @@ var Upload = {
         error: $('.error'),
         form: $('#upload')
     },
+    // Initialise any actions
     init: function(){
         Upload.el.form.submit(function(e) {Upload.formSubmit(e)})
     },
+    // Handle form submissions
     formSubmit: function(e) {
+        // Set input values, we can't do this in init as we need to retrieve current values.
         var input = {
             json: $('[name="json"]').val(),
             file: $('[name="hierarchy"]').val()
@@ -17,6 +21,7 @@ var Upload = {
         e.preventDefault();
         Upload.hideError();
         Upload.hideHierarchy();
+        // If no input exists, show error.
         if (input['file'] == "" && input['json'] == "") {
             Upload.showError('<p>No input file or json.</p>');
             return;
@@ -24,6 +29,8 @@ var Upload = {
             Upload.getHierarchy(JSON.parse(input['json']));
         }
     },
+    // Hide and show elements.
+    // @TODO Clean up functions as we can optimise these.
     hideError: function() {
         Upload.el.error.html('').hide();
     },
@@ -42,6 +49,7 @@ var Upload = {
     showContent: function() {
         Upload.el.content.show();
     },
+    // Make ajax call to get hierarchy.
     getHierarchy: function(json) {
         $.ajax({
             url: "/api/hierarchy",
@@ -58,6 +66,7 @@ var Upload = {
 
             });
     },
+    // Build hierarchy chart.
     getChildren: function(array) {
         var hierarchyString = '<ul>';
         for(var employee in array) {
@@ -77,6 +86,7 @@ var Upload = {
 $(function(){
     Upload.init();
 
+    // As we add an element after upload we need to create watch for action on this element.
     $(document).on('click', '.upload-new', function() {
         Upload.hideHierarchy();
         Upload.showContent();
