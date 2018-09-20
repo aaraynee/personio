@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Personio Hierarchy</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@
                 margin-bottom: 30px;
             }
 
-            .error {
+            .error, .heirarchy {
                 display: none;
             }
         </style>
@@ -75,6 +75,9 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+            <div class="hierarchy">
+
+            </div>
             <div class="content">
                 <div class="title m-b-md">
                     Upload Hierarchy
@@ -82,30 +85,16 @@
                 <div class="error"></div>
                 <div>
                     <form id="upload" enctype="multipart/form-data">
-                        Select image to upload:
-                        <input type="file" name="hierarchy" id="hierarchy">
+                        <p>Input Text:</p>
+                        <textarea id="json" name="json"></textarea>
+                        <p>or</p>
+                        <p>Select file to upload:</p>
+                        <input type="file" name="hierarchy" id="hierarchy"><br>
                         <input type="submit" value="Upload File" name="submit">
                     </form>
                 </div>
             </div>
         </div>
-        <script>
-            // Using jQuery we are able to submit a form with a file input.
-            // We can then send a request to the endpoint created in the API
-            // Use response to print Org Chart
-            $(document).ready(function(){
-                $('#upload').submit(function(e){
-                    e.preventDefault();
-                    var error = $('.error');
-                    error.hide();
-                    var fileInput = $('[name="hierarchy"]').val();
-                    if (fileInput == "") {
-                        error.html('<p>No input file.</p>').show();
-                        return;
-                    }
-                    // @TODO Read input file, make ajax to api endpoint, then display response in Org Chart.
-                });
-            });
-        </script>
+        <script src="/js/upload.js"></script>
     </body>
 </html>

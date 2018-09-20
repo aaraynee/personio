@@ -24,10 +24,9 @@ class HierarchyController extends Controller
                 }
                 $structure[$parent][] = $child;
             }
-
             return $this->generateHierarchy($relationships, $boss);
         } else {
-            return ['Loop exists'];
+            return response()->json( 'Invalid Json', 400 );
         }
     }
 
